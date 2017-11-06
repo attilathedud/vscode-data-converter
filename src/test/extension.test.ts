@@ -52,3 +52,15 @@ suite("Convert Text To Base Tests", () => {
         assert.equal(converter.convert_text_to_base('-1111011', 2, 16), '-7b');
     });
 });
+
+suite("Unicode and Hex Tests", () => {
+    test("Empty input", () => {
+        assert.equal(converter.unicode_to_hex(''), '');
+        assert.equal(converter.hex_to_unicode(''), '');
+    });
+
+    test("Basic string", () => {
+        assert.equal(converter.unicode_to_hex('abc'), '\\u61\\u62\\u63');
+        assert.equal(converter.hex_to_unicode('\\u61\\u62\\u63'), 'abc');
+    });
+});

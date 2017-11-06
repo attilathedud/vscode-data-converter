@@ -72,30 +72,10 @@ export function activate(context: vscode.ExtensionContext) {
                             edit.replace(element, decodeURIComponent(selected_text));
                             break;
                         case quick_options_hash['unicode_to_hex'].label:
-                            var converted_text: string = '';
-
-                            for (var i = 0; i < selected_text.length; i++) {
-                                converted_text += "\\u" + selected_text.codePointAt(i).toString(16);
-                            }
-
-                            edit.replace(element, converted_text);
+                            edit.replace(element, converter.unicode_to_hex(selected_text));
                             break;
                         case quick_options_hash['hex_to_unicode'].label:
-                            var converted_text: string = '';
-
-                            let unicode_elements: string[] = selected_text.split('\\u');
-
-                            unicode_elements.forEach(element => {
-                                let parsed_number: number = Number("0x" + element);
-
-                                if (isNaN(parsed_number)) {
-                                    return;
-                                }
-
-                                converted_text += String.fromCharCode(parsed_number);
-                            });
-
-                            edit.replace(element, converted_text);
+                            edit.replace(element, converter.hex_to_unicode(selected_text));
                             break;
                     }
                 });
