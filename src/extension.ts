@@ -1,11 +1,8 @@
 'use strict';
 
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
 
-import Window = vscode.window;
-import QuickPickItem = vscode.QuickPickItem;
-import QuickPickOptions = vscode.QuickPickOptions;
-import Range = vscode.Range;
+import { converter } from "./converter";
 
 export function activate(context: vscode.ExtensionContext) {
     let disposable = vscode.commands.registerCommand('extension.dataConversion', () => {
@@ -27,25 +24,23 @@ export function activate(context: vscode.ExtensionContext) {
             'hex_to_unicode': { label: "Hex to Unicode", description: "Convert hex to unicode text" }
         };
 
-        const opts: QuickPickOptions = { matchOnDescription: true };
-        const items: QuickPickItem[] = [];
+        const opts: vscode.QuickPickOptions = { matchOnDescription: true };
+        const items: vscode.QuickPickItem[] = [];
 
         for (var key in quick_options_hash) {
             items.push(quick_options_hash[key]);
         }
 
-        Window.showQuickPick(items).then((menu_selection) => {
+        vscode.window.showQuickPick(items).then((menu_selection) => {
             if (!menu_selection) {
                 return;
             }
 
-            const editor = Window.activeTextEditor;
-            const document = editor.document;
-            const selections = editor.selections;
+            const editor = vscode.window.activeTextEditor;
 
             editor.edit(function (edit) {
-                selections.forEach(element => {
-                    let selected_text: string = document.getText(new Range(element.start, element.end));
+                editor.selections.forEach(element => {
+                    let selected_text: string = editor.document.getText(new vscode.Range(element.start, element.end));
 
                     if (selected_text.length == 0) {
                         return;
@@ -53,50 +48,22 @@ export function activate(context: vscode.ExtensionContext) {
 
                     switch (menu_selection.label) {
                         case quick_options_hash['decimal_to_binary'].label:
+                            edit.replace(element, converter.convert_text_to_base(selected_text, 10, 2));
+                            break;
                         case quick_options_hash['decimal_to_hex'].label:
+                            edit.replace(element, converter.convert_text_to_base(selected_text, 10, 16));
+                            break;
                         case quick_options_hash['hex_to_binary'].label:
+                            edit.replace(element, converter.convert_text_to_base(selected_text, 16, 2));
+                            break;
                         case quick_options_hash['hex_to_decimal'].label:
+                            edit.replace(element, converter.convert_text_to_base(selected_text, 16, 10));
+                            break;
                         case quick_options_hash['binary_to_decimal'].label:
+                            edit.replace(element, converter.convert_text_to_base(selected_text, 2, 10));
+                            break;
                         case quick_options_hash['binary_to_hex'].label:
-                            let representation: number = 0;
-                            let new_base: number = 0;
-
-                            selected_text = selected_text.trim();
-                            selected_text = selected_text.replace('0x', '');
-                            selected_text = selected_text.replace('0b', '');
-
-                            switch (menu_selection.label) {
-                                case quick_options_hash['decimal_to_binary'].label:
-                                    representation = Number(selected_text);
-                                    new_base = 2;
-                                    break;
-                                case quick_options_hash['decimal_to_hex'].label:
-                                    representation = Number(selected_text);
-                                    new_base = 16;
-                                    break;
-                                case quick_options_hash['hex_to_binary'].label:
-                                    representation = Number('0x' + selected_text);
-                                    new_base = 2;
-                                    break;
-                                case quick_options_hash['hex_to_decimal'].label:
-                                    representation = Number('0x' + selected_text);
-                                    new_base = 10;
-                                    break;
-                                case quick_options_hash['binary_to_decimal'].label:
-                                    representation = Number('0b' + selected_text);
-                                    new_base = 10;
-                                    break;
-                                case quick_options_hash['binary_to_hex'].label:
-                                    representation = Number('0b' + selected_text);
-                                    new_base = 16;
-                                    break;
-                            }
-
-                            if (isNaN(representation) || new_base <= 0) {
-                                return;
-                            }
-
-                            edit.replace(element, representation.toString(new_base));
+                            edit.replace(element, converter.convert_text_to_base(selected_text, 2, 16));
                             break;
                         case quick_options_hash['escape_url'].label:
                             edit.replace(element, encodeURIComponent(selected_text));

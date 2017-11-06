@@ -1,22 +1,54 @@
-//
-// Note: This example test is leveraging the Mocha test framework.
-// Please refer to their documentation on https://mochajs.org/ for help.
-//
-
-// The module 'assert' provides assertion methods from node
 import * as assert from 'assert';
+import { converter } from "../converter";
 
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
-import * as vscode from 'vscode';
-import * as myExtension from '../extension';
+suite("Convert Text To Base Tests", () => {
+    test("Empty input", () => {
+        assert.equal(converter.convert_text_to_base('', 10, 2), '');
+    });
 
-// Defines a Mocha test suite to group tests of similar kind together
-suite("Extension Tests", () => {
+    test("Invalid input", () => {
+        assert.equal(converter.convert_text_to_base('abc', 10, 2), '');
+    });
 
-    // Defines a Mocha unit test
-    test("Something 1", () => {
-        assert.equal(-1, [1, 2, 3].indexOf(5));
-        assert.equal(-1, [1, 2, 3].indexOf(0));
+    test("Decimal to Binary", () => {
+        assert.equal(converter.convert_text_to_base('0', 10, 2), '0');
+        assert.equal(converter.convert_text_to_base('1', 10, 2), '1');
+        assert.equal(converter.convert_text_to_base('123', 10, 2), '1111011');
+        assert.equal(converter.convert_text_to_base('-123', 10, 2), '-1111011');
+    });
+
+    test("Decimal to Hex", () => {
+        assert.equal(converter.convert_text_to_base('0', 10, 16), '0');
+        assert.equal(converter.convert_text_to_base('1', 10, 16), '1');
+        assert.equal(converter.convert_text_to_base('123', 10, 16), '7b');
+        assert.equal(converter.convert_text_to_base('-123', 10, 16), '-7b');
+    });
+
+    test("Hex to Binary", () => {
+        assert.equal(converter.convert_text_to_base('0', 16, 2), '0');
+        assert.equal(converter.convert_text_to_base('1', 16, 2), '1');
+        assert.equal(converter.convert_text_to_base('7b', 16, 2), '1111011');
+        assert.equal(converter.convert_text_to_base('-7b', 16, 2), '-1111011');
+    });
+
+    test("Hex to Decimal", () => {
+        assert.equal(converter.convert_text_to_base('0', 16, 10), '0');
+        assert.equal(converter.convert_text_to_base('1', 16, 10), '1');
+        assert.equal(converter.convert_text_to_base('7b', 16, 10), '123');
+        assert.equal(converter.convert_text_to_base('-7b', 16, 10), '-123');
+    });
+
+    test("Binary to Decimal", () => {
+        assert.equal(converter.convert_text_to_base('0', 2, 10), '0');
+        assert.equal(converter.convert_text_to_base('1', 2, 10), '1');
+        assert.equal(converter.convert_text_to_base('1111011', 2, 10), '123');
+        assert.equal(converter.convert_text_to_base('-1111011', 2, 10), '-123');
+    });
+
+    test("Binary to Hex", () => {
+        assert.equal(converter.convert_text_to_base('0', 2, 16), '0');
+        assert.equal(converter.convert_text_to_base('1', 2, 16), '1');
+        assert.equal(converter.convert_text_to_base('1111011', 2, 16), '7b');
+        assert.equal(converter.convert_text_to_base('-1111011', 2, 16), '-7b');
     });
 });
