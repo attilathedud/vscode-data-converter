@@ -46,40 +46,52 @@ export function activate(context: vscode.ExtensionContext) {
                         return;
                     }
 
-                    let should_prepend_with_identifier: boolean = vscode.workspace.getConfiguration('converter').get('prependDataWithIdentifier');
+                    let should_prepend_with_identifier: boolean =
+                        vscode.workspace.getConfiguration('converter').get('prependDataWithIdentifier');
 
-                    switch (menu_selection.label) {
-                        case quick_options_hash['decimal_to_binary'].label:
-                            edit.replace(element, converter.convert_text_to_base(selected_text, 10, 2, should_prepend_with_identifier));
-                            break;
-                        case quick_options_hash['decimal_to_hex'].label:
-                            edit.replace(element, converter.convert_text_to_base(selected_text, 10, 16, should_prepend_with_identifier));
-                            break;
-                        case quick_options_hash['hex_to_binary'].label:
-                            edit.replace(element, converter.convert_text_to_base(selected_text, 16, 2, should_prepend_with_identifier));
-                            break;
-                        case quick_options_hash['hex_to_decimal'].label:
-                            edit.replace(element, converter.convert_text_to_base(selected_text, 16, 10, should_prepend_with_identifier));
-                            break;
-                        case quick_options_hash['binary_to_decimal'].label:
-                            edit.replace(element, converter.convert_text_to_base(selected_text, 2, 10, should_prepend_with_identifier));
-                            break;
-                        case quick_options_hash['binary_to_hex'].label:
-                            edit.replace(element, converter.convert_text_to_base(selected_text, 2, 16, should_prepend_with_identifier));
-                            break;
-                        case quick_options_hash['escape_url'].label:
-                            edit.replace(element, encodeURIComponent(selected_text));
-                            break;
-                        case quick_options_hash['unescape_url'].label:
-                            edit.replace(element, decodeURIComponent(selected_text));
-                            break;
-                        case quick_options_hash['unicode_to_hex'].label:
-                            edit.replace(element, converter.unicode_to_hex(selected_text));
-                            break;
-                        case quick_options_hash['hex_to_unicode'].label:
-                            edit.replace(element, converter.hex_to_unicode(selected_text));
-                            break;
-                    }
+                    let selected_text_segments: string[] = selected_text.split('\n');
+                    let segmented_text: string = '';
+
+                    selected_text_segments.forEach(segment => {
+                        switch (menu_selection.label) {
+                            case quick_options_hash['decimal_to_binary'].label:
+                                segmented_text += converter.convert_text_to_base(segment, 10, 2, should_prepend_with_identifier);
+                                break;
+                            case quick_options_hash['decimal_to_hex'].label:
+                                segmented_text += converter.convert_text_to_base(segment, 10, 16, should_prepend_with_identifier);
+                                break;
+                            case quick_options_hash['hex_to_binary'].label:
+                                segmented_text += converter.convert_text_to_base(segment, 16, 2, should_prepend_with_identifier);
+                                break;
+                            case quick_options_hash['hex_to_decimal'].label:
+                                segmented_text += converter.convert_text_to_base(segment, 16, 10, should_prepend_with_identifier);
+                                break;
+                            case quick_options_hash['binary_to_decimal'].label:
+                                segmented_text += converter.convert_text_to_base(segment, 2, 10, should_prepend_with_identifier);
+                                break;
+                            case quick_options_hash['binary_to_hex'].label:
+                                segmented_text += converter.convert_text_to_base(segment, 2, 16, should_prepend_with_identifier);
+                                break;
+                            case quick_options_hash['escape_url'].label:
+                                segmented_text += encodeURIComponent(segment);
+                                break;
+                            case quick_options_hash['unescape_url'].label:
+                                segmented_text += decodeURIComponent(segment);
+                                break;
+                            case quick_options_hash['unicode_to_hex'].label:
+                                segmented_text += converter.unicode_to_hex(segment);
+                                break;
+                            case quick_options_hash['hex_to_unicode'].label:
+                                segmented_text += converter.hex_to_unicode(segment);
+                                break;
+                        }
+
+                        segmented_text += '\n';
+                    });
+
+                    segmented_text = segmented_text.slice(0, -1);
+
+                    edit.replace(element, segmented_text);
                 });
             });
         });

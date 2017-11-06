@@ -7,7 +7,7 @@ suite("Convert Text To Base Tests", () => {
     });
 
     test("Invalid input", () => {
-        assert.equal(converter.convert_text_to_base('abc', 10, 2), '');
+        assert.equal(converter.convert_text_to_base('abc', 10, 2), 'abc');
     });
 
     test("Decimal to Binary", () => {

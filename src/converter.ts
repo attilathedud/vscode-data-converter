@@ -6,7 +6,7 @@ export module converter {
         let identifier_prefix: string = '';
 
         if (text.length == 0) {
-            return '';
+            return text;
         }
 
         text = text.trim();
@@ -29,7 +29,7 @@ export module converter {
         representation = Number(number_prefix + text);
 
         if (isNaN(representation)) {
-            return '';
+            return text;
         }
 
         if (add_data_identifier && new_base == 16) {
