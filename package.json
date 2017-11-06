@@ -36,6 +36,11 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Add 0x and 0b in front of hex and binary numbers when converted."
+                },
+                "converter.treatSpacesAsDelimiter": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Spaces indicate a new number."
                 }
             }
         }

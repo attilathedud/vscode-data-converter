@@ -10,8 +10,8 @@ export module converter {
         }
 
         text = text.trim();
-        text = text.replace('0x', '');
-        text = text.replace('0b', '');
+        text = text.replace(new RegExp('0x', 'g'), '');
+        text = text.replace(new RegExp('0b', 'g'), '');
 
         if (text[0] == '-') {
             negative_prefix += '-';
