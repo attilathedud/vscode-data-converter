@@ -55,18 +55,28 @@ export function activate(context: vscode.ExtensionContext) {
 
                     let selected_text_segments: string[] = selected_text.split('\n');
                     let segmented_text: string = '';
-                    
+
                     selected_text_segments.forEach(segment => {
-                        if (!spaces_indicate_delimiter) {
-                            if (!parseInt(segment.replace(new RegExp(' ', 'g'), ''))) {
-                                segmented_text += segment + '\n';
-                                return;
+                        let segments_within_line: string[] = new Array(segment);
+
+                        if (menu_selection.label == quick_options_hash['decimal_to_binary'].label ||
+                            menu_selection.label == quick_options_hash['decimal_to_hex'].label ||
+                            menu_selection.label == quick_options_hash['hex_to_binary'].label ||
+                            menu_selection.label == quick_options_hash['hex_to_decimal'].label ||
+                            menu_selection.label == quick_options_hash['binary_to_decimal'].label ||
+                            menu_selection.label == quick_options_hash['binary_to_hex'].label) {
+
+                            if (!spaces_indicate_delimiter) {
+                                if (!parseInt(segment.replace(new RegExp(' ', 'g'), ''))) {
+                                    segmented_text += segment + '\n';
+                                    return;
+                                }
+
+                                segment = segment.replace(new RegExp(' ', 'g'), '');
                             }
 
-                            segment = segment.replace(new RegExp(' ', 'g'), '');
+                            segments_within_line = segment.split(' ');
                         }
-
-                        let segments_within_line: string[] = segment.split(' ');
 
                         segments_within_line.forEach(line_segment => {
                             switch (menu_selection.label) {
