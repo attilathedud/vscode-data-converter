@@ -46,24 +46,26 @@ export function activate(context: vscode.ExtensionContext) {
                         return;
                     }
 
+                    let should_prepend_with_identifier: boolean = vscode.workspace.getConfiguration('converter').get('prependDataWithIdentifier');
+
                     switch (menu_selection.label) {
                         case quick_options_hash['decimal_to_binary'].label:
-                            edit.replace(element, converter.convert_text_to_base(selected_text, 10, 2));
+                            edit.replace(element, converter.convert_text_to_base(selected_text, 10, 2, should_prepend_with_identifier));
                             break;
                         case quick_options_hash['decimal_to_hex'].label:
-                            edit.replace(element, converter.convert_text_to_base(selected_text, 10, 16));
+                            edit.replace(element, converter.convert_text_to_base(selected_text, 10, 16, should_prepend_with_identifier));
                             break;
                         case quick_options_hash['hex_to_binary'].label:
-                            edit.replace(element, converter.convert_text_to_base(selected_text, 16, 2));
+                            edit.replace(element, converter.convert_text_to_base(selected_text, 16, 2, should_prepend_with_identifier));
                             break;
                         case quick_options_hash['hex_to_decimal'].label:
-                            edit.replace(element, converter.convert_text_to_base(selected_text, 16, 10));
+                            edit.replace(element, converter.convert_text_to_base(selected_text, 16, 10, should_prepend_with_identifier));
                             break;
                         case quick_options_hash['binary_to_decimal'].label:
-                            edit.replace(element, converter.convert_text_to_base(selected_text, 2, 10));
+                            edit.replace(element, converter.convert_text_to_base(selected_text, 2, 10, should_prepend_with_identifier));
                             break;
                         case quick_options_hash['binary_to_hex'].label:
-                            edit.replace(element, converter.convert_text_to_base(selected_text, 2, 16));
+                            edit.replace(element, converter.convert_text_to_base(selected_text, 2, 16, should_prepend_with_identifier));
                             break;
                         case quick_options_hash['escape_url'].label:
                             edit.replace(element, encodeURIComponent(selected_text));

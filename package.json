@@ -15,17 +15,30 @@
     ],
     "main": "./out/extension",
     "contributes": {
-        "commands": [{
-            "command": "extension.dataConversion",
-            "title": "Data Conversion",
-            "description": "Convert data for selections"
-        }],
-		"keybindings": [
-			{
-				"command": "extension.dataConversion",
-				"key": "Alt+D"
-			}
-        ]
+        "commands": [
+            {
+                "command": "extension.dataConversion",
+                "title": "Data Conversion",
+                "description": "Convert data for selections"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "extension.dataConversion",
+                "key": "Alt+D"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Data Converter configuration",
+            "properties": {
+                "converter.prependDataWithIdentifier": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Add 0x and 0b in front of hex and binary numbers when converted."
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",

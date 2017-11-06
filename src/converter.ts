@@ -1,8 +1,9 @@
 export module converter {
-    export function convert_text_to_base(text: string, old_base: number, new_base: number) {
+    export function convert_text_to_base(text: string, old_base: number, new_base: number, add_data_identifier?: boolean) {
         let representation: number = 0;
         let number_prefix: string = '';
         let negative_prefix: string = '';
+        let identifier_prefix: string = '';
 
         if (text.length == 0) {
             return '';
@@ -31,7 +32,14 @@ export module converter {
             return '';
         }
 
-        return negative_prefix + representation.toString(new_base);
+        if (add_data_identifier && new_base == 16) {
+            identifier_prefix = '0x';
+        }
+        else if (add_data_identifier && new_base == 2) {
+            identifier_prefix = '0b';
+        }
+
+        return identifier_prefix + negative_prefix + representation.toString(new_base);
     }
 
     export function unicode_to_hex(text: string) {
