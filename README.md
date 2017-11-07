@@ -2,6 +2,8 @@
 
 ![Screenshot](https://raw.githubusercontent.com/attilathedud/vscode-data-converter/master/imgs/data-converter.gif "Action")
 
+[Download here.](https://marketplace.visualstudio.com/items?itemName=attilathedud.data-converter)
+
 Data Converter is a VSCode that allows you to quick convert sections of data from one form to another. It can be used to assist in debugging error logs or any other number heavy process.
 
 ## Usage
