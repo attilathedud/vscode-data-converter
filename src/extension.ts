@@ -52,6 +52,8 @@ export function activate(context: vscode.ExtensionContext) {
                     let spaces_indicate_delimiter: boolean =
                         vscode.workspace.getConfiguration('converter').get('treatSpacesAsDelimiter');
 
+                    let paddingLength: number = 
+                        vscode.workspace.getConfiguration('converter').get('padToLength');
 
                     let selected_text_segments: string[] = selected_text.split('\n');
                     let segmented_text: string = '';
@@ -81,22 +83,22 @@ export function activate(context: vscode.ExtensionContext) {
                         segments_within_line.forEach(line_segment => {
                             switch (menu_selection.label) {
                                 case quick_options_hash['decimal_to_binary'].label:
-                                    segmented_text += converter.convert_text_to_base(line_segment, 10, 2, should_prepend_with_identifier);
+                                    segmented_text += converter.convert_text_to_base(line_segment, 10, 2, paddingLength, should_prepend_with_identifier);
                                     break;
                                 case quick_options_hash['decimal_to_hex'].label:
-                                    segmented_text += converter.convert_text_to_base(line_segment, 10, 16, should_prepend_with_identifier);
+                                    segmented_text += converter.convert_text_to_base(line_segment, 10, 16, paddingLength, should_prepend_with_identifier);
                                     break;
                                 case quick_options_hash['hex_to_binary'].label:
-                                    segmented_text += converter.convert_text_to_base(line_segment, 16, 2, should_prepend_with_identifier);
+                                    segmented_text += converter.convert_text_to_base(line_segment, 16, 2, paddingLength, should_prepend_with_identifier);
                                     break;
                                 case quick_options_hash['hex_to_decimal'].label:
-                                    segmented_text += converter.convert_text_to_base(line_segment, 16, 10, should_prepend_with_identifier);
+                                    segmented_text += converter.convert_text_to_base(line_segment, 16, 10, paddingLength, should_prepend_with_identifier);
                                     break;
                                 case quick_options_hash['binary_to_decimal'].label:
-                                    segmented_text += converter.convert_text_to_base(line_segment, 2, 10, should_prepend_with_identifier);
+                                    segmented_text += converter.convert_text_to_base(line_segment, 2, 10, paddingLength, should_prepend_with_identifier);
                                     break;
                                 case quick_options_hash['binary_to_hex'].label:
-                                    segmented_text += converter.convert_text_to_base(line_segment, 2, 16, should_prepend_with_identifier);
+                                    segmented_text += converter.convert_text_to_base(line_segment, 2, 16, paddingLength, should_prepend_with_identifier);
                                     break;
                                 case quick_options_hash['escape_url'].label:
                                     segmented_text += encodeURIComponent(line_segment);

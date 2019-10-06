@@ -17,3 +17,4 @@ Select text and press `Alt+D` to bring up the options menu.
 ## Configuration Options
 * `converter.prependDataWithIdentifier`: Add 0x and 0b in front of hex and binary numbers when converted.
 * `converter.treatSpacesAsDelimiter`: Spaces indicate a new number.
+* `converter.padToLength`: The amount of digits to pad converted numbers to.

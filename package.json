@@ -2,7 +2,7 @@
     "name": "data-converter",
     "displayName": "Data Converter",
     "description": "Convert data to different formats",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "publisher": "attilathedud",
     "icon": "imgs/icon.png",
     "engines": {
@@ -31,7 +31,7 @@
         ],
         "configuration": {
             "type": "object",
-            "title": "Data Converter configuration",
+            "title": "Data Converter",
             "properties": {
                 "converter.prependDataWithIdentifier": {
                     "type": "boolean",
@@ -42,6 +42,11 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Spaces indicate a new number."
+                },
+                "converter.padToLength": {
+                    "type": "number",
+                    "default": 0,
+                    "description": "The amount of digits to pad converted numbers to."
                 }
             }
         }
