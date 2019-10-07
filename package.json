@@ -47,6 +47,11 @@
                     "type": "number",
                     "default": 0,
                     "description": "The amount of digits to pad converted numbers to."
+                },
+                "converter.useVariablePadding" : {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Prompt for a padding length upon each conversion."
                 }
             }
         }
