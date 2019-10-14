@@ -2,7 +2,7 @@
     "name": "data-converter",
     "displayName": "Data Converter",
     "description": "Convert data to different formats",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "publisher": "attilathedud",
     "icon": "imgs/icon.png",
     "engines": {
