@@ -1,3 +1,6 @@
+## 1.0.3
+Added variable padding.
+
 ## 1.0.2
 Added optional padding.
 
