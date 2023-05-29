@@ -15,11 +15,13 @@ function beginParse(menu_selection:vscode.QuickPickItem, quick_options_hash:{}, 
                 return;
             }
 
-            let should_prepend_with_identifier: boolean =
-                vscode.workspace.getConfiguration('converter').get('prependDataWithIdentifier');
+            let hex_identifier: string =
+                vscode.workspace.getConfiguration('converter').get('hexIdentifier');
 
-            let spaces_indicate_delimiter: boolean =
-                vscode.workspace.getConfiguration('converter').get('treatSpacesAsDelimiter');
+            let bin_identifier: string =
+                vscode.workspace.getConfiguration('converter').get('binIdentifier');
+            let delimiter: string =
+                vscode.workspace.getConfiguration('converter').get('numberDelimiter');
 
             let selected_text_segments: string[] = selected_text.split('\n');
             let segmented_text: string = '';
@@ -34,37 +36,37 @@ function beginParse(menu_selection:vscode.QuickPickItem, quick_options_hash:{}, 
                     menu_selection.label == quick_options_hash['binary_to_decimal'].label ||
                     menu_selection.label == quick_options_hash['binary_to_hex'].label) {
 
-                    if (!spaces_indicate_delimiter) {
+                    if (delimiter != '') {
                         if (!parseInt(segment.replace(new RegExp(' ', 'g'), ''))) {
                             segmented_text += segment + '\n';
                             return;
                         }
 
-                        segment = segment.replace(new RegExp(' ', 'g'), '');
+                        segment = segment.replace(new RegExp(delimiter, 'g'), '');
                     }
 
-                    segments_within_line = segment.split(' ');
+                    segments_within_line = segment.split(delimiter);
                 }
 
                 segments_within_line.forEach(line_segment => {
                     switch (menu_selection.label) {
                         case quick_options_hash['decimal_to_binary'].label:
-                            segmented_text += converter.convert_text_to_base(line_segment, 10, 2, paddingLength, should_prepend_with_identifier);
+                            segmented_text += converter.convert_text_to_base(line_segment, 10, 2, paddingLength, hex_identifier, bin_identifier);
                             break;
                         case quick_options_hash['decimal_to_hex'].label:
-                            segmented_text += converter.convert_text_to_base(line_segment, 10, 16, paddingLength, should_prepend_with_identifier);
+                            segmented_text += converter.convert_text_to_base(line_segment, 10, 16, paddingLength, hex_identifier, bin_identifier);
                             break;
                         case quick_options_hash['hex_to_binary'].label:
-                            segmented_text += converter.convert_text_to_base(line_segment, 16, 2, paddingLength, should_prepend_with_identifier);
+                            segmented_text += converter.convert_text_to_base(line_segment, 16, 2, paddingLength, hex_identifier, bin_identifier);
                             break;
                         case quick_options_hash['hex_to_decimal'].label:
-                            segmented_text += converter.convert_text_to_base(line_segment, 16, 10, paddingLength, should_prepend_with_identifier);
+                            segmented_text += converter.convert_text_to_base(line_segment, 16, 10, paddingLength, hex_identifier, bin_identifier);
                             break;
                         case quick_options_hash['binary_to_decimal'].label:
-                            segmented_text += converter.convert_text_to_base(line_segment, 2, 10, paddingLength, should_prepend_with_identifier);
+                            segmented_text += converter.convert_text_to_base(line_segment, 2, 10, paddingLength, hex_identifier, bin_identifier);
                             break;
                         case quick_options_hash['binary_to_hex'].label:
-                            segmented_text += converter.convert_text_to_base(line_segment, 2, 16, paddingLength, should_prepend_with_identifier);
+                            segmented_text += converter.convert_text_to_base(line_segment, 2, 16, paddingLength, hex_identifier, bin_identifier);
                             break;
                         case quick_options_hash['escape_url'].label:
                             segmented_text += encodeURIComponent(line_segment);
@@ -80,7 +82,7 @@ function beginParse(menu_selection:vscode.QuickPickItem, quick_options_hash:{}, 
                             break;
                     }
 
-                    segmented_text += ' ';
+                    segmented_text += delimiter;
                 });
 
                 segmented_text = segmented_text.slice(0, -1);
@@ -126,10 +128,10 @@ export function activate(context: vscode.ExtensionContext) {
             if (!menu_selection) {
                 return;
             }
-          
-            let variablePadding: boolean = 
+
+            let variablePadding: boolean =
                 vscode.workspace.getConfiguration('converter').get('useVariablePadding');
-            
+
             if(variablePadding) {
                 vscode.window.showInputBox({ "prompt" : "Padding to apply", "placeHolder": "0"}).then((padding) => {
                     let padding_number: number = Number(padding);
@@ -142,9 +144,9 @@ export function activate(context: vscode.ExtensionContext) {
                 });
             }
             else {
-                let paddingLength: number = 
+                let paddingLength: number =
                     vscode.workspace.getConfiguration('converter').get('padToLength');
-                
+
                 beginParse(menu_selection, quick_options_hash, paddingLength);
             }
         });

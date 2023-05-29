@@ -33,15 +33,20 @@
             "type": "object",
             "title": "Data Converter",
             "properties": {
-                "converter.prependDataWithIdentifier": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Add 0x and 0b in front of hex and binary numbers when converted."
+                "converter.hexIdentifier": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Add identifier in front of hex numbers when converted."
                 },
-                "converter.treatSpacesAsDelimiter": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Spaces indicate a new number."
+                "converter.binIdentifier": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Add identifier in front of binary numbers when converted."
+                },
+                "converter.numberDelimiter": {
+                    "type": "string",
+                    "default": " ",
+                    "description": "delimiter indicates a new number."
                 },
                 "converter.padToLength": {
                     "type": "number",

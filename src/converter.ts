@@ -1,5 +1,5 @@
 export module converter {
-    export function convert_text_to_base(text: string, old_base: number, new_base: number, paddingLength: number, add_data_identifier?: boolean) {
+    export function convert_text_to_base(text: string, old_base: number, new_base: number, paddingLength: number, hex_data_identifier: string, bin_data_identifier: string) {
         let representation: number = 0;
         let number_prefix: string = '';
         let negative_prefix: string = '';
@@ -10,8 +10,8 @@ export module converter {
         }
 
         text = text.trim();
-        text = text.replace(new RegExp('0x', 'g'), '');
-        text = text.replace(new RegExp('0b', 'g'), '');
+        text = text.replace(new RegExp(hex_data_identifier, 'g'), '');
+        text = text.replace(new RegExp(bin_data_identifier, 'g'), '');
 
         if (text[0] == '-') {
             negative_prefix += '-';
@@ -20,10 +20,10 @@ export module converter {
         text = text.replace('-', '');
 
         if (old_base == 16) {
-            number_prefix += '0x';
+            number_prefix += hex_data_identifier;
         }
         else if (old_base == 2) {
-            number_prefix += '0b';
+            number_prefix += bin_data_identifier;
         }
 
         representation = Number(number_prefix + text);
@@ -32,11 +32,11 @@ export module converter {
             return text;
         }
 
-        if (add_data_identifier && new_base == 16) {
-            identifier_prefix = '0x';
+        if (hex_data_identifier!='' && new_base == 16) {
+            identifier_prefix = hex_data_identifier;
         }
-        else if (add_data_identifier && new_base == 2) {
-            identifier_prefix = '0b';
+        else if (bin_data_identifier!='' && new_base == 2) {
+            identifier_prefix = bin_data_identifier;
         }
 
         let converted_text: string = '';
@@ -44,7 +44,7 @@ export module converter {
 
         for(var i = 0; i < paddingLength - representation.toString(new_base).length; i++)
             converted_text += "0";
-        
+
         converted_text += representation.toString(new_base);
         return converted_text;
     }
