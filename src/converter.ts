@@ -10,8 +10,8 @@ export module converter {
         }
 
         text = text.trim();
-        text = text.replace(new RegExp(hex_data_identifier, 'g'), '');
-        text = text.replace(new RegExp(bin_data_identifier, 'g'), '');
+        text = text.replaceAll(hex_data_identifier, '');
+        text = text.replaceAll(bin_data_identifier, '');
 
         if (text[0] == '-') {
             negative_prefix += '-';
@@ -20,10 +20,10 @@ export module converter {
         text = text.replace('-', '');
 
         if (old_base == 16) {
-            number_prefix += hex_data_identifier;
+            number_prefix += '0x';
         }
         else if (old_base == 2) {
-            number_prefix += bin_data_identifier;
+            number_prefix += '0b';
         }
 
         representation = Number(number_prefix + text);

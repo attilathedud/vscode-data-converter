@@ -36,24 +36,27 @@
                 "converter.hexIdentifier": {
                     "type": "string",
                     "default": "",
-                    "description": "Add identifier in front of hex numbers when converted."
+                    "description": "Add identifier in front of hex numbers when converted.",
+                    "maxLength": 3
                 },
                 "converter.binIdentifier": {
                     "type": "string",
                     "default": "",
-                    "description": "Add identifier in front of binary numbers when converted."
+                    "description": "Add identifier in front of binary numbers when converted.",
+                    "maxLength": 3
                 },
                 "converter.numberDelimiter": {
                     "type": "string",
                     "default": " ",
-                    "description": "delimiter indicates a new number."
+                    "description": "Delimiter or space indicates a new number.",
+                    "maxLength": 1
                 },
                 "converter.padToLength": {
                     "type": "number",
                     "default": 0,
                     "description": "The amount of digits to pad converted numbers to."
                 },
-                "converter.useVariablePadding" : {
+                "converter.useVariablePadding": {
                     "type": "boolean",
                     "default": false,
                     "description": "Prompt for a padding length upon each conversion."
@@ -69,10 +72,10 @@
         "test": "npm run compile && node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "typescript": "^2.5.3",
-        "vscode": "^1.1.5",
+        "@types/mocha": "^2.2.42",
         "@types/node": "^7.0.43",
-        "@types/mocha": "^2.2.42"
+        "typescript": "^2.5.3",
+        "vscode": "^1.1.37"
     },
     "repository": {
         "type": "git",

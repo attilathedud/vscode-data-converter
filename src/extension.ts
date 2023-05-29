@@ -36,13 +36,13 @@ function beginParse(menu_selection:vscode.QuickPickItem, quick_options_hash:{}, 
                     menu_selection.label == quick_options_hash['binary_to_decimal'].label ||
                     menu_selection.label == quick_options_hash['binary_to_hex'].label) {
 
-                    if (delimiter != '') {
+                    if (delimiter == '') {
                         if (!parseInt(segment.replace(new RegExp(' ', 'g'), ''))) {
                             segmented_text += segment + '\n';
                             return;
                         }
 
-                        segment = segment.replace(new RegExp(delimiter, 'g'), '');
+                        segment = segment.replace(new RegExp(' ', 'g'), '');
                     }
 
                     segments_within_line = segment.split(delimiter);
