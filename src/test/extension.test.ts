@@ -53,8 +53,8 @@ suite("Convert Text To Base Tests", () => {
     });
 
     test("Add identifier", () => {
-        assert.equal(converter.convert_text_to_base('1', 10, 16, 0, true), '0x1');
-        assert.equal(converter.convert_text_to_base('1', 10, 2, 0, true), '0b1');
+        assert.equal(converter.convert_text_to_base('1', 10, 16, 0, '0x', ''), '0x1');
+        assert.equal(converter.convert_text_to_base('1', 10, 2, 0,'','0b' ), '0b1');
     });
 
     test("Add padding", () => {

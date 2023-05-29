@@ -1,5 +1,5 @@
 export module converter {
-    export function convert_text_to_base(text: string, old_base: number, new_base: number, paddingLength: number, hex_data_identifier: string, bin_data_identifier: string) {
+    export function convert_text_to_base(text: string, old_base: number, new_base: number, paddingLength: number, hex_data_identifier?: string, bin_data_identifier?: string) {
         let representation: number = 0;
         let number_prefix: string = '';
         let negative_prefix: string = '';
