@@ -18,7 +18,7 @@ Select text and press `Alt+D` to bring up the options menu.
 
 ## Configuration Options
 
-* `converter.hexIdentifier`: Add identifier in front of hex and binary numbers when converted.
-* `converter.binIdentifier`: Add identifier in front of hex and binary numbers when converted.
+* `converter.hexIdentifier`: Add identifier in front of hex numbers when converted.
+* `converter.binIdentifier`: Add identifier in front of binary numbers when converted.
 * `converter.numberDelimiter`: Delimiter indicates a new number.
 * `converter.padToLength`: The amount of digits to pad converted numbers to.
